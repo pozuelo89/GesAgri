@@ -18,9 +18,11 @@ export function useDatosMaestros() {
   })
 
   useEffect(() => {
-    const storedDatos = localStorage.getItem('datosMaestros')
-    if (storedDatos) {
-      setDatosMaestros(JSON.parse(storedDatos))
+    if (typeof window !== 'undefined') {
+      const storedDatos = localStorage.getItem('datosMaestros')
+      if (storedDatos) {
+        setDatosMaestros(JSON.parse(storedDatos))
+      }
     }
   }, [])
 
@@ -30,7 +32,9 @@ export function useDatosMaestros() {
       [type]: [...datosMaestros[type], value]
     }
     setDatosMaestros(updatedDatos)
-    localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    }
   }
 
   const editDatoMaestro = (type: keyof DatosMaestros, index: number, newValue: string) => {
@@ -39,7 +43,9 @@ export function useDatosMaestros() {
       [type]: datosMaestros[type].map((value, i) => i === index ? newValue : value)
     }
     setDatosMaestros(updatedDatos)
-    localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    }
   }
 
   const deleteDatoMaestro = (type: keyof DatosMaestros, index: number) => {
@@ -48,7 +54,9 @@ export function useDatosMaestros() {
       [type]: datosMaestros[type].filter((_, i) => i !== index)
     }
     setDatosMaestros(updatedDatos)
-    localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('datosMaestros', JSON.stringify(updatedDatos))
+    }
   }
 
   return { datosMaestros, addDatoMaestro, editDatoMaestro, deleteDatoMaestro }
