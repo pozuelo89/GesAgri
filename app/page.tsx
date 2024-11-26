@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     console.log('Formulario enviado', { email, password })
@@ -27,7 +27,12 @@ export default function LoginPage() {
       }
       document.cookie = 'auth=true; path=/'
       console.log('Cookie establecida')
-      router.push('/dashboard')
+      try {
+        await router.push('/dashboard')
+        console.log('Redirección iniciada')
+      } catch (error) {
+        console.error('Error durante la redirección:', error)
+      }
     } else {
       console.log('Credenciales incorrectas')
       setError('Credenciales incorrectas')
@@ -89,3 +94,4 @@ export default function LoginPage() {
     </div>
   )
 }
+
