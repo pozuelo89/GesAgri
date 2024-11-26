@@ -17,7 +17,7 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    
+    console.log('Formulario enviado', { email, password })
     if (email === 'carlos_lgn@hotmail.com' && password === 'MillanAstray7') {
       console.log('Credenciales correctas, intentando redirigir...')
       if (rememberMe) {
@@ -25,6 +25,8 @@ export default function LoginPage() {
       } else {
         localStorage.removeItem('user')
       }
+      document.cookie = 'auth=true; path=/'
+      console.log('Cookie establecida')
       router.push('/dashboard')
     } else {
       console.log('Credenciales incorrectas')
